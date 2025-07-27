@@ -1,0 +1,13 @@
+name = "your-project-name"
+main = "dist/index.js"
+compatibility_date = "2023-04-03"
+
+[vars]
+# Add your environment variables here
+SUPABASE_URL = "your_supabase_url"
+SUPABASE_ANON_KEY = "your_supabase_anon_key"
+
+[[d1_databases]]
+binding = "D1" # i.e. available in your worker as env.D1
+database_name = "your-database-name"
+database_id = "your-database-id"

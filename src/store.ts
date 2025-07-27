@@ -15,16 +15,21 @@ export const useUserStore = create<UserState>((set: SetState<UserState>) => ({
   setUser: (user: any | null) => set({ user }),
   setCredits: (credits: number) => set({ credits }),
   fetchCredits: async () => {
-    const user = supabase.auth.getUser();
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error) {
+      console.error('Error fetching user:', error);
+      return;
+    }
+
     if (user) {
-      const { data, error } = await supabase
+      const { data, error: creditsError } = await supabase
         .from('credits')
         .select('amount')
         .eq('user_id', user.id)
         .single();
 
-      if (error) {
-        console.error('Error fetching credits:', error);
+      if (creditsError) {
+        console.error('Error fetching credits:', creditsError);
         return;
       }
 
